@@ -1,0 +1,36 @@
+#!/bin/bash
+txtrst=$(tput sgr0) # Text reset
+txtred=$(tput setaf 1) # Red
+txtblu=$(tput setaf 4) # Blue
+txtylw=$(tput setaf 3) # Yellow
+program="Octon Search"
+sudo chmod+x search-db.sh
+sudo chmod+x search-g.sh
+echo "${txtylw}Could you please enter your username?${txtrst}"
+read name
+echo "${txtylw}Thank you, $name. Now installing Octon Search.${txtrst}"
+echo "${txtred}Checking if folder already exists. If not, creating it.${txtrst}"
+sleep 2
+DIRECTORY="/home/$name/.bin"
+if [ ! -d "$DIRECTORY" ]; then
+    # Control will enter here if $DIRECTORY doesn't exist
+mkdir "$DIRECTORY"
+fi
+mkdir "/home/$name/.bin/$program"
+echo "${txtred}Moving the first script into the correct folder.${txtrst}"
+sleep 2
+mv search-db.sh "/home/$name/.bin/$program"
+echo "${txtred}Moving the second script into the correct folder.${txtrst}"
+sleep 2
+mv search-g.sh "/home/$name/.bin/$program"
+echo "${txtred}Creating symlinks for ease of use in${txtrst} ${txtblu}/usr/bin${txtrst}"
+sleep 2
+sudo ln -s "/home/$name/.bin/$program/search-db.sh" "/usr/bin/search-db"
+sudo ln -s "/home/$name/.bin/$program/search-g.sh" "/usr/bin/search-g"
+echo "${txtred}Creating menu entries${txtrst}"
+sleep 2
+sudo mv octon-search.png /usr/share/icons/64x64/apps/octon-search.png
+sudo mv octon-database-search.desktop /usr/share/applications
+sudo mv octon-google-search.desktop /usr/share/applications
+echo "${txtylw}Thank you for your patience. The programs are installed and ready. You can run them with the commands${txtrst} ${txtblu}search-db${txtrst} ${txtylw}and${txtrst} ${txtblu}search-g${txtrst} ${txtylw}in lower case. Alternatively, you will find links in the menu. Have fun.${txtrst}"
+read -p "${txtylw}Press enter to exit...${txtrst}" anykey
